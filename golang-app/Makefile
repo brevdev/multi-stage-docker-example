@@ -1,7 +1,6 @@
 .PHONY: install
 install: ## go install tools
-	$(call print-target)
-	cd tools && go install $(shell cd tools && go list -f '{{ join .Imports " " }}' -tags=tools)
+	cd tools && make install
 
 .PHONY: lint
 lint: ## golangci-lint
@@ -10,12 +9,16 @@ lint: ## golangci-lint
 
 .PHONY: build-release
 build-release:
-	docker build -t golang-app --target release .
+	docker build -t golang-app-release --target release .
 
 .PHONY: build-ci
 build-ci:
-	docker build -t golang-app --target ci .
+	docker build -t golang-app-ci --target ci .
 
 .PHONY: build-dev
 build-dev:
-	docker build -t golang-app --target dev .
+	docker build -t golang-app-dev --target dev .
+
+.PHONY: run-dev
+run-dev: build-dev
+	docker run -it -v $(shell pwd)/:/workspace golang-app-dev bash
