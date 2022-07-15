@@ -1,7 +1,6 @@
 FROM golang:1.18 AS base
 WORKDIR /app
-COPY go.mod ./
-COPY main.go ./
+COPY ./ ./
 
 FROM base AS builder
 RUN go build -o app
