@@ -2,8 +2,7 @@ FROM golang:1.18 AS builder
 # install things we need for build
 WORKDIR /app
 # only copy what we need (source files) to improve caching
-COPY main.go ./
-COPY go.mod ./
+COPY main.go go.mod ./
 RUN go build -o app
 
 FROM alpine:latest AS release
@@ -20,7 +19,8 @@ COPY tools ./tools
 RUN cd tools && make install
 
 FROM ci as dev
-WORKDIR /workspace
 # install things we need for dev: utilities, helpers, etc
-# an example of a dev tool
-RUN go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+RUN apt-get update && apt-get install \
+    mysql-client
+# workspace is where we will mount the code volume
+WORKDIR /workspace
