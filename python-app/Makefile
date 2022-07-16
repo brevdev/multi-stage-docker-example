@@ -17,3 +17,11 @@ run-dev: build-dev
 .PHONY: run-reload
 run-reload:
 	uvicorn python_app.main:app --reload
+
+.PHONY: lint
+lint:
+	mypy .
+
+.PHONY: format
+format:
+	black .
