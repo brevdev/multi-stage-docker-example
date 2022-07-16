@@ -20,7 +20,7 @@ RUN cd tools && make install
 
 FROM ci as dev
 # install things we need for dev: utilities, helpers, etc
-RUN apt-get update && apt-get install \
-    mysql-client
+RUN apt-get update && apt-get install -y \
+    default-mysql-client
 # workspace is where we will mount the code volume
 WORKDIR /workspace
