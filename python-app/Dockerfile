@@ -2,7 +2,7 @@ FROM python:3.8 as base
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
-WORKDIR /app
+WORKDIR /workspace
 
 FROM base as builder
 # used for building
@@ -32,5 +32,5 @@ FROM ci as dev
 # install things needed for dev
 RUN apt-get update && apt-get install -y \
     default-mysql-client
-# workspace is where we will mount the code volume
-WORKDIR /workspace
+COPY Makefile ./
+CMD ["make", "run-reload"]

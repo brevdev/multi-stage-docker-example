@@ -10,18 +10,27 @@ build-ci:
 build-dev:
 	docker build -t python-app-dev --target dev .
 
-.PHONY: run-dev
-run-dev: build-dev
+
+.PHONY: run-dev-outer
+run-dev-outer: build-dev
+	docker run -it -v $(shell pwd)/:/workspace python-app-dev
+
+.PHONY: run-dev-inner
+run-dev-inner: build-dev
 	docker run -it -v $(shell pwd)/:/workspace python-app-dev bash
 
 .PHONY: run-reload
 run-reload:
-	uvicorn python_app.main:app --reload
+	poetry run uvicorn python_app.main:app --reload
 
 .PHONY: lint
 lint:
-	mypy .
+	poetry run mypy .
 
 .PHONY: format
 format:
-	black .
+	poetry run black .
+
+.PHONY: test
+test:
+	poetry run pytest .
