@@ -15,6 +15,7 @@ CMD ["./app"]
 FROM builder as ci
 # install things we need for CI: linting etc
 # only copy what we need to improve caching
+COPY .golangci.yml ./
 COPY tools ./tools
 RUN cd tools && make install
 
