@@ -1,4 +1,4 @@
-# Example
+# App Examples
 
 ## Dependencies
 - make
