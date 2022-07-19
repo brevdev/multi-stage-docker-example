@@ -11,17 +11,24 @@ build-dev:
 	docker build -t python-app-dev --target dev .
 
 
-.PHONY: run-dev-outer
-run-dev-outer: build-dev
-	docker run -it -v $(shell pwd)/:/workspace python-app-dev
+.PHONY: dev-up
+dev-up: build-dev
+	docker run -it -v $(shell pwd)/:/workspace python-app-dev sleep infinity
 
-.PHONY: run-dev-inner
-run-dev-inner: build-dev
+.PHONY: dev-shell
+dev-shell: build-dev
 	docker run -it -v $(shell pwd)/:/workspace python-app-dev bash
 
-.PHONY: run-reload
-run-reload:
-	poetry run uvicorn python_app.main:app --reload
+.PHONY: run-server-reload
+run-server-reload:
+	poetry run uvicorn python_app.server:app --reload
+
+.PHONY: run-worker-reload
+run-worker-reload:
+	watchmedo auto-restart --directory=./ --patterns="*.py" --recursive -- make run-worker
+
+run-worker:
+	python -c 'from python_app import worker; worker.run()'
 
 .PHONY: lint
 lint:

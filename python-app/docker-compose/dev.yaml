@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  server:
+    build:
+      target: dev
+    command: make run-server-reload
+    volumes:
+      - "./:workspace"
+  worker:
+    build:
+      target: dev
+    command: run-worker-reload
+    volumes:
+      - "./:workspace"

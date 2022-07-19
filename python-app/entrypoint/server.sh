@@ -4,4 +4,4 @@ set -e
 
 . /venv/bin/activate
 
-exec uvicorn python_app.main:app
+exec uvicorn python_app.server:app

@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  server:
+    build:
+      target: release
+    command: ./entrypoint/server.sh
+  worker:
+    build:
+      target: release
+    command: ./entrypoint/worker.sh

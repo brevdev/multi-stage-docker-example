@@ -20,8 +20,8 @@ RUN poetry build && /venv/bin/pip install dist/*.whl
 FROM base as release
 # most minimal
 COPY --from=builder /venv /venv
-COPY docker-entrypoint.sh python_app ./
-CMD ["./docker-entrypoint.sh"]
+COPY python_app ./
+COPY entrypoint ./entrypoint
 
 FROM builder as ci
 # install things needed for CI
@@ -33,4 +33,3 @@ FROM ci as dev
 RUN apt-get update && apt-get install -y \
     default-mysql-client
 COPY Makefile ./
-CMD ["make", "run-reload"]
