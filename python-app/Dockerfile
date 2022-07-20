@@ -27,11 +27,13 @@ FROM builder as ci
 RUN poetry install
 COPY ./tests ./tests
 
-FROM ci as dev
+FROM ci as dev-service
 # install things needed for dev
 RUN apt-get update && apt-get install -y \
     default-mysql-client
 COPY Makefile ./
+
+FROM dev-service as dev-box
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="true"

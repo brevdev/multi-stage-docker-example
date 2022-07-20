@@ -8,7 +8,7 @@ build-ci:
 
 .PHONY: build-dev
 build-dev:
-	docker build -t python-app-dev --target dev .
+	docker build -t python-app-dev --target dev-service .
 
 .PHONY: dev-up
 dev-up: build-dev
@@ -24,7 +24,7 @@ run-server-reload:
 
 .PHONY: run-worker-reload
 run-worker-reload:
-	watchmedo auto-restart --directory=./ --patterns="*.py" --recursive -- make run-worker
+	poetry run watchmedo auto-restart --directory=./ --patterns="*.py" --recursive -- make run-worker
 
 run-worker:
 	poetry run python -c 'from python_app import worker; worker.run()'
@@ -32,6 +32,9 @@ run-worker:
 dev-services-up:
 	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml up
 	docker-compose down
+
+dev-services-build:
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml build
 
 .PHONY: lint
 lint:

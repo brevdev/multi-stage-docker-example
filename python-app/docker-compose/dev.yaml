@@ -2,15 +2,15 @@ version: "3.9"
 services:
   server:
     build:
-      target: dev
+      target: dev-service
     command: make run-server-reload
     volumes:
       - "../:/workspace"
-    env_file: [.env, config/dev.env]
+    env_file: [../.env, ../config/dev.env, ../config/docker.env]
   worker:
     build:
-      target: dev
-    command: run-worker-reload
+      target: dev-service
+    command: make run-worker-reload
     volumes:
       - "../:/workspace"
-    env_file: [.env, config/dev.env]
+    env_file: [../.env, ../config/dev.env, ../config/docker.env]
