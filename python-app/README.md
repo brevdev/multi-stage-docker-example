@@ -6,3 +6,4 @@ Mysql and redis are not hooked up in the python app. This is left as exercise to
 
 ## Use
 - create a .env file to add personal env vars.
+- use the devcontainer or run `make dev-shell`

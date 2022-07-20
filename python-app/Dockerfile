@@ -20,7 +20,8 @@ RUN poetry build && /venv/bin/pip install dist/*.whl
 FROM base as release
 # most minimal
 COPY --from=builder /venv /venv
-COPY python_app entrypoint ./
+COPY python_app ./python_app
+COPY entrypoint ./entrypoint
 
 FROM builder as ci
 # install things needed for CI
@@ -58,6 +59,7 @@ RUN apt-get update \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
 
 VOLUME [ "/var/lib/docker" ]
+VOLUME [ "/root/.vscode-server/extensions" ]
 
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine 
 # inside the container "overrideCommand": false is set in devcontainer.json. 

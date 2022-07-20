@@ -8,15 +8,15 @@ build-ci:
 
 .PHONY: build-dev
 build-dev:
-	docker build -t python-app-dev --target dev-service .
+	docker build -t python-app-dev --target dev-box .
 
 .PHONY: dev-up
 dev-up: build-dev
-	docker run -it -v $(shell pwd)/:/workspace python-app-dev sleep infinity
+	docker run --init --privileged -it -v $(shell pwd)/:/workspace python-app-dev sleep infinity
 
 .PHONY: dev-shell
 dev-shell: build-dev
-	docker run -it -v $(shell pwd)/:/workspace python-app-dev bash
+	docker run --init --privileged -it -v $(shell pwd)/:/workspace python-app-dev bash
 
 .PHONY: run-server-reload
 run-server-reload:
@@ -35,6 +35,13 @@ dev-services-up:
 
 dev-services-build:
 	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml build
+
+release-services-up:
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/release.yaml up
+	docker-compose down
+
+release-services-build:
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/release.yaml build
 
 .PHONY: lint
 lint:
