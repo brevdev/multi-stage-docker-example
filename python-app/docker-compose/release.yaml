@@ -4,7 +4,9 @@ services:
     build:
       target: release
     command: ./entrypoint/server.sh
+    env_file: [.env, config/release.env]
   worker:
     build:
       target: release
     command: ./entrypoint/worker.sh
+    env_file: [.env, config/release.env]

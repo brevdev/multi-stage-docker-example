@@ -6,9 +6,11 @@ services:
     command: make run-server-reload
     volumes:
       - "../:/workspace"
+    env_file: [.env, config/dev.env]
   worker:
     build:
       target: dev
     command: run-worker-reload
     volumes:
       - "../:/workspace"
+    env_file: [.env, config/dev.env]
