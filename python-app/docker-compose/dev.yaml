@@ -5,10 +5,10 @@ services:
       target: dev
     command: make run-server-reload
     volumes:
-      - "./:workspace"
+      - "../:/workspace"
   worker:
     build:
       target: dev
     command: run-worker-reload
     volumes:
-      - "./:workspace"
+      - "../:/workspace"

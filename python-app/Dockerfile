@@ -20,8 +20,7 @@ RUN poetry build && /venv/bin/pip install dist/*.whl
 FROM base as release
 # most minimal
 COPY --from=builder /venv /venv
-COPY python_app ./
-COPY entrypoint ./entrypoint
+COPY python_app entrypoint ./
 
 FROM builder as ci
 # install things needed for CI

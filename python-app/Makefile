@@ -10,7 +10,6 @@ build-ci:
 build-dev:
 	docker build -t python-app-dev --target dev .
 
-
 .PHONY: dev-up
 dev-up: build-dev
 	docker run -it -v $(shell pwd)/:/workspace python-app-dev sleep infinity
@@ -28,7 +27,11 @@ run-worker-reload:
 	watchmedo auto-restart --directory=./ --patterns="*.py" --recursive -- make run-worker
 
 run-worker:
-	python -c 'from python_app import worker; worker.run()'
+	poetry run python -c 'from python_app import worker; worker.run()'
+
+dev-services-up:
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml up
+	docker-compose down
 
 .PHONY: lint
 lint:
