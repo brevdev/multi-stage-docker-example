@@ -9,5 +9,15 @@
     "build": {
         "dockerfile": "../Dockerfile",
         "target": "dev"
+    },
+    "runArgs": [
+        "--init",
+        "--privileged"
+    ],
+    "overrideCommand": false,
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "go.gopath": "/go"
     }
 }
