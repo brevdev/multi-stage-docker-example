@@ -30,18 +30,12 @@ run-worker:
 	poetry run python -c 'from python_app import worker; worker.run()'
 
 dev-services-up:
-	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml up
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml up --build
 	docker-compose down
-
-dev-services-build:
-	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/dev.yaml build
 
 release-services-up:
-	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/release.yaml up
+	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/release.yaml up --build
 	docker-compose down
-
-release-services-build:
-	docker-compose -f docker-compose/helpers.yaml -f docker-compose/services.yaml -f docker-compose/release.yaml build
 
 .PHONY: lint
 lint:

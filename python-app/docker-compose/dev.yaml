@@ -6,11 +6,11 @@ services:
     command: make run-server-reload
     volumes:
       - "../:/workspace"
-    env_file: [../.env, ../config/dev.env, ../config/docker.env]
+    env_file: [../config/dev.env]
   worker:
     build:
       target: dev-service
     command: make run-worker-reload
     volumes:
       - "../:/workspace"
-    env_file: [../.env, ../config/dev.env, ../config/docker.env]
+    env_file: [../config/dev.env]
